@@ -42,18 +42,21 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Функция для инициализации карты
     function initMap(latitude, longitude) {
-        const map = new ymaps.Map('map', {
-            center: [latitude || 44.9521, longitude || 34.1028], 
-            zoom: 10 
+        ymaps.ready(function () {
+            const map = new ymaps.Map('map', {
+                center: [latitude || 44.9521, longitude || 34.1028], 
+                zoom: 10 
+            });
+    
+            const placemark = new ymaps.Placemark([latitude, longitude], {
+                balloonContent: 'Ресторан'
+            });
+    
+            map.geoObjects.add(placemark);
+            map.setCenter([latitude, longitude], 15);
         });
-
-        const placemark = new ymaps.Placemark([latitude, longitude], {
-            balloonContent: 'Ресторан'
-        });
-
-        map.geoObjects.add(placemark);
-        map.setCenter([latitude, longitude], 15); 
     }
+    
 
     // Функция для загрузки меню из базы данных
     async function loadMenu(restaurantId) {
